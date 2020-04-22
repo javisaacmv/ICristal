@@ -1,0 +1,12 @@
+.modal-card-head {
+  background-color: hsl(0, 2%, 22%);
+}
+.modal-card-foot {
+  background-color: hsl(0, 2%, 22%);
+}
+.modal-card-title {
+  color: hsl(0, 0%, 96%);
+}
+.modal-card-body {
+  background-color: hsl(0, 0%, 96%);
+}
