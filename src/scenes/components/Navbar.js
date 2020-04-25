@@ -1,16 +1,12 @@
 import React from "react";
 import AuthContext from "../../context/authContext/authContext";
 
-const Navbar = () => {
-  const { userAuth, logoutUser, user, getUser } = React.useContext(AuthContext);
+const Navbar = (props) => {
+  const { userAuth, logoutUser, user } = React.useContext(AuthContext);
 
   function onLogout() {
     logoutUser();
   }
-
-  React.useEffect(() => {
-    getUser();
-  }, [userAuth]);
 
   console.log(user);
 
@@ -23,7 +19,7 @@ const Navbar = () => {
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
           <a href={"/"} className="navbar-item">
-            {"ICristal - " + (user ? user.name : "")}
+            {"ICristal " + (user ? " - " + user.name : "")}
           </a>
 
           <a className="navbar-item">Mis categorias</a>

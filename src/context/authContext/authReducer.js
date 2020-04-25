@@ -6,25 +6,26 @@ export default (state, action) => {
       return {
         ...state,
         userAuth: true,
-        errors: null
+        errors: null,
       };
     case "fail_register":
     case "fail_login":
     case "logout":
+    case "auth_error":
       console.log("removiendo token");
       localStorage.removeItem("token");
       return {
         ...state,
         userAuth: null,
         errors: action.payload,
-        user: null
+        user: null,
       };
     case "user_geted":
       return {
         ...state,
         user: action.payload,
         userAuth: true,
-        errors: null
+        errors: null,
       };
     default:
       return state;

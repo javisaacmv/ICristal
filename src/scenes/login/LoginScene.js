@@ -1,13 +1,14 @@
 import React from "react";
 import AuthContext from "../../context/authContext/authContext";
 
-const LoginScene = props => {
+const LoginScene = (props) => {
   const { loginUser, userAuth, errors } = React.useContext(AuthContext);
 
   const [email, setEmail] = React.useState({ value: "", error: "" });
   const [pass, setPass] = React.useState({ value: "", error: "" });
 
   React.useEffect(() => {
+    if (!userAuth) return;
     if (userAuth) {
       console.log(userAuth);
       props.history.push("/");
@@ -17,7 +18,7 @@ const LoginScene = props => {
   function onSubmit() {
     loginUser({
       email: email.value,
-      password: pass.value
+      password: pass.value,
     });
   }
 
@@ -38,7 +39,7 @@ const LoginScene = props => {
                   type="email"
                   placeholder="Email"
                   value={email.value}
-                  onChange={e =>
+                  onChange={(e) =>
                     setEmail({ ...email, value: e.currentTarget.value })
                   }
                 />
@@ -52,7 +53,7 @@ const LoginScene = props => {
                   type="password"
                   placeholder="Contraseña"
                   value={pass.value}
-                  onChange={e =>
+                  onChange={(e) =>
                     setPass({ ...pass, value: e.currentTarget.value })
                   }
                 />

@@ -5,33 +5,33 @@ import axios from "axios";
 import envConfig from "../../config";
 import setToken from "../../utils/setToken";
 
-const AuthState = props => {
+const AuthState = (props) => {
   const initialState = {
     userAuth: null,
     errors: null,
-    user: null
+    user: null,
   };
 
   const [state, dispatch] = React.useReducer(AuthReducer, initialState);
 
   //register
-  const registerUser = async userData => {
+  const registerUser = async (userData) => {
     const url = envConfig();
     const config = {
       header: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     };
     try {
       const res = await axios.post(url + "/register", userData, config);
       dispatch({
         type: "success_register",
-        payload: res.data
+        payload: res.data,
       });
     } catch (err) {
       dispatch({
         type: "fail_register",
-        payload: err.response.data.error[0].msg
+        payload: err.response.data.error[0].msg,
       });
     }
   };
@@ -47,40 +47,40 @@ const AuthState = props => {
       const res = await axios.get(url + "/auth");
       dispatch({
         type: "user_geted",
-        payload: res.data
+        payload: res.data,
       });
     } catch (err) {
       dispatch({
-        type: "not_user_geted",
-        payload: err.response.data
+        type: "auth_error",
+        payload: err.response.data,
       });
     }
   };
 
-  const loginUser = async userData => {
+  const loginUser = async (userData) => {
     const url = envConfig();
     const config = {
       header: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     };
     try {
       const res = await axios.post(url + "/auth", userData, config);
       dispatch({
         type: "success_login",
-        payload: res.data
+        payload: res.data,
       });
     } catch (err) {
       dispatch({
         type: "fail_login",
-        payload: err.response.data.error[0].msg
+        payload: err.response.data.error[0].msg,
       });
     }
   };
 
   const logoutUser = () => {
     dispatch({
-      type: "logout"
+      type: "logout",
     });
   };
 
@@ -93,7 +93,7 @@ const AuthState = props => {
         loginUser,
         logoutUser,
         getUser: getUser,
-        user: state.user
+        user: state.user,
       }}
     >
       {props.children}

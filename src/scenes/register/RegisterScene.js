@@ -2,7 +2,7 @@ import React from "react";
 import AuthContext from "../../context/authContext/authContext";
 
 const RegisterScene = () => {
-  const { registerUser, userAuth, errors } = React.useContext(AuthContext);
+  const { registerUser, errors } = React.useContext(AuthContext);
   const [name, setName] = React.useState({ value: "", error: "" });
   const [email, setEmail] = React.useState({ value: "", error: "" });
   const [pass, setPass] = React.useState({ value: "", error: "" });
@@ -50,7 +50,7 @@ const RegisterScene = () => {
     registerUser({
       name: name.value,
       email: email.value,
-      password: pass.value
+      password: pass.value,
     });
   }
 
@@ -67,7 +67,7 @@ const RegisterScene = () => {
                 type="text"
                 placeholder="Nombre"
                 value={name.value}
-                onChange={e =>
+                onChange={(e) =>
                   setName({ ...name, value: e.currentTarget.value })
                 }
               />
@@ -81,7 +81,7 @@ const RegisterScene = () => {
                 type="email"
                 placeholder="Email"
                 value={email.value}
-                onChange={e =>
+                onChange={(e) =>
                   setEmail({ ...email, value: e.currentTarget.value })
                 }
               />
@@ -95,7 +95,7 @@ const RegisterScene = () => {
                 type="password"
                 placeholder="Contraseña"
                 value={pass.value}
-                onChange={e =>
+                onChange={(e) =>
                   setPass({ ...pass, value: e.currentTarget.value })
                 }
               />
@@ -109,7 +109,7 @@ const RegisterScene = () => {
                 type="password"
                 placeholder="Ingrese de nuevo la contraseña"
                 value={pass2.value}
-                onChange={e =>
+                onChange={(e) =>
                   setPass2({ ...pass2, value: e.currentTarget.value })
                 }
               />
