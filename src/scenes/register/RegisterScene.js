@@ -1,14 +1,14 @@
 import React from "react";
-import envConfig from "../../config";
-import axios from "axios";
+import AuthContext from "../../context/authContext/authContext";
 
 const RegisterScene = () => {
-  const fetchUrl = envConfig();
-
+  const { registerUser, userAuth, errors } = React.useContext(AuthContext);
   const [name, setName] = React.useState({ value: "", error: "" });
   const [email, setEmail] = React.useState({ value: "", error: "" });
   const [pass, setPass] = React.useState({ value: "", error: "" });
   const [pass2, setPass2] = React.useState({ value: "", error: "" });
+
+  if (errors) console.log(errors);
 
   function ValidateEmail(mail) {
     return /\S+@\S+\.\S+/.test(mail);
@@ -41,11 +41,17 @@ const RegisterScene = () => {
     } else {
       setPass({ ...pass, error: "" });
     }
-    if (pass2.value !== pass.value) {
+    if (!(pass2.value === pass.value)) {
       setPass2({ ...pass2, error: "Las contraseñas no coinciden" });
+      return;
     } else {
       setPass2({ ...pass2, error: "" });
     }
+    registerUser({
+      name: name.value,
+      email: email.value,
+      password: pass.value
+    });
   }
 
   return (
@@ -120,6 +126,7 @@ const RegisterScene = () => {
                 Aceptar
               </button>
             </div>
+            {errors && <p className="help is-danger">{errors}</p>}
           </div>
         </div>
       </div>

@@ -1,6 +1,19 @@
 import React from "react";
+import AuthContext from "../../context/authContext/authContext";
 
 const Navbar = () => {
+  const { userAuth, logoutUser, user, getUser } = React.useContext(AuthContext);
+
+  function onLogout() {
+    logoutUser();
+  }
+
+  React.useEffect(() => {
+    getUser();
+  }, [userAuth]);
+
+  console.log(user);
+
   return (
     <nav
       className="navbar is-dark"
@@ -10,7 +23,7 @@ const Navbar = () => {
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
           <a href={"/"} className="navbar-item">
-            ICristal
+            {"ICristal - " + (user ? user.name : "")}
           </a>
 
           <a className="navbar-item">Mis categorias</a>
@@ -32,10 +45,20 @@ const Navbar = () => {
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">
-            <a href={"/register"} className="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a className="button is-light">Log in</a>
+            {!userAuth ? (
+              <div>
+                <a href={"/register"} className="button is-primary">
+                  <strong>Sign up</strong>
+                </a>
+                <a href="/login" className="button is-light">
+                  Log in
+                </a>
+              </div>
+            ) : (
+              <button onClick={() => onLogout()} className="button is-light">
+                Log out
+              </button>
+            )}
           </div>
         </div>
       </div>
