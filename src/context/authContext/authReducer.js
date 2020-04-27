@@ -19,6 +19,7 @@ export default (state, action) => {
         userAuth: null,
         errors: action.payload,
         user: null,
+        loading: null,
       };
     case "user_geted":
       return {

@@ -10,6 +10,7 @@ import PrivateRoute from "./scenes/components/PrivateRoute";
 import setToken from "../src/utils/setToken";
 
 if (localStorage.token) {
+  console.log(localStorage.token);
   setToken(localStorage.token);
 }
 

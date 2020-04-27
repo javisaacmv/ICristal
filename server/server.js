@@ -14,12 +14,13 @@ app.use(bodyParser.json());
 
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
+app.use("/notif", require("./routes/notification"));
 
 app.use((err, req, res, next) => {
   //console.log(err);
   res.status(422).send({ error: err.message });
 });
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log("ready for request 🚀");
 });

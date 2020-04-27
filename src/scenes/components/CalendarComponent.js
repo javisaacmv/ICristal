@@ -20,6 +20,7 @@ const Calendar = ({ date, setDate }) => {
       locale="es"
       onChange={(date) => setDate(date)}
       customInput={<ExampleCustomInput />}
+      minDate={new Date()}
     />
   );
 };

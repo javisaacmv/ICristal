@@ -1,18 +1,21 @@
 import React from "react";
 import NotificationsComponent from "./components/NotificationsComponent";
 import AuthContext from "../../context/authContext/authContext";
+import NotifState from "../../context/notificationContext/notificationState";
 
 const Home = () => {
   const { getUser } = React.useContext(AuthContext);
 
   React.useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, []);
 
   return (
     <div>
       <div className="section">
-        <NotificationsComponent />
+        <NotifState>
+          <NotificationsComponent />
+        </NotifState>
       </div>
     </div>
   );
