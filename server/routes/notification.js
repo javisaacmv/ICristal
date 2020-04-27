@@ -54,5 +54,21 @@ router.post(
     }
   }
 );
+router.delete(
+  "/:id",
+
+  auth,
+  async (req, res) => {
+    try {
+      let notif = await Notification.findById(req.params.id);
+      if (!notif) return res.status(404).json({ msg: "notif not found" });
+      await notif.update({ active: false });
+      res.send("notif Removed successfully");
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("server error");
+    }
+  }
+);
 
 module.exports = router;

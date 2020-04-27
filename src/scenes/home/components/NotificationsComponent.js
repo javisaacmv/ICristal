@@ -3,28 +3,28 @@ import NewNotificationComponent from "./NewNotificationComponent";
 import NotifContext from "../../../context/notificationContext/notificationContext";
 import NotificationComp from "./NotificationComp";
 import moment from "moment";
+import AuthContext from "../../../context/authContext/authContext";
 
 const NotificationsComponent = () => {
-  const { newNotification, getNotifications, notifications } = React.useContext(
-    NotifContext
-  );
+  const { user } = React.useContext(AuthContext);
+  const {
+    newNotification,
+    getNotifications,
+    notifications,
+    deleteNotification,
+  } = React.useContext(NotifContext);
 
-  const [onAdd, setOnAdd] = React.useState(false);
+  const [onLoading, setOnLoading] = React.useState(false);
 
   let notifArr = React.useMemo(() => displayNotifications(), [
     notifications,
-    onAdd,
+    onLoading,
   ]);
 
   React.useEffect(() => {
-    if (!notifications) {
-      getNotifications();
-
-      return;
-    }
     getNotifications();
     // eslint-disable-next-line
-  }, [onAdd]);
+  }, [onLoading, user]);
 
   function displayNotifications() {
     if (!notifications) return;
@@ -43,18 +43,21 @@ const NotificationsComponent = () => {
       <NewNotificationComponent
         saveNotification={newNotification}
         getNotifications={getNotifications}
-        setOnAdd={setOnAdd}
+        setOnLoading={setOnLoading}
       />
       <br />
       <br />
       {notifArr &&
         notifArr.map((n) => (
           <NotificationComp
-            id={n.id}
+            id={n._id}
             title={n.title}
             description={n.description}
             deadline={n.deadline}
             active={n.active}
+            setOnLoading={setOnLoading}
+            deleteNotification={deleteNotification}
+            getNotifications={getNotifications}
           />
         ))}
     </div>

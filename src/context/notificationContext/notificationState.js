@@ -34,6 +34,24 @@ const NotifState = (props) => {
     }
   };
 
+  const deleteNotification = async (id) => {
+    try {
+      const res = await axios.delete(url + `/notif/${id}`);
+      setState({
+        ...state,
+        res,
+        errors: null,
+      });
+      getNotifications();
+    } catch (err) {
+      setState({
+        ...state,
+        res: null,
+        errors: err.response.data,
+      });
+    }
+  };
+
   const getNotifications = async () => {
     try {
       const res = await axios.get(url + "/notif");
@@ -58,6 +76,7 @@ const NotifState = (props) => {
     <NotifContext.Provider
       value={{
         newNotification,
+        deleteNotification,
         getNotifications,
         response: state.res,
         notifications: state.notifications,

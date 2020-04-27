@@ -6,7 +6,7 @@ import moment from "moment";
 const NewNotificationComponent = ({
   saveNotification,
   getNotifications,
-  setOnAdd,
+  setOnLoading,
 }) => {
   const [modalIsActive, setModalIsActive] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
@@ -25,14 +25,14 @@ const NewNotificationComponent = ({
       setDescription({ ...description, error: "Introduzca una descripción" });
       return;
     }
-    setOnAdd(true);
+    setOnLoading(true);
 
     saveNotification({
       title: title.value,
       description: description.value,
       deadline: moment(date),
     });
-    setOnAdd(false);
+    setOnLoading(false);
 
     getNotifications();
     setModalIsActive(false);

@@ -2,7 +2,15 @@ import React from "react";
 import moment from "moment";
 import "moment/locale/es";
 
-const NotificationComp = ({ id, title, description, deadline }) => {
+const NotificationComp = ({
+  id,
+  title,
+  description,
+  deadline,
+  setOnLoading,
+  deleteNotification,
+  getNotifications,
+}) => {
   const today = moment(new Date());
   const limit = moment(deadline);
   let notifClasses;
@@ -13,9 +21,17 @@ const NotificationComp = ({ id, title, description, deadline }) => {
   if (limit.diff(today, "days") < 3) notifClasses = "is-danger";
   if (limit.diff(today, "days") < 0) notifClasses = "";
 
+  function onDelete() {
+    console.log(id);
+    setOnLoading(true);
+    deleteNotification(id);
+    setOnLoading(false);
+    getNotifications();
+  }
+
   return (
     <div className={"notification " + notifClasses} key={id}>
-      <button className="delete"></button>
+      <button className="delete" onClick={() => onDelete()}></button>
       <span className="">{title}</span>
       <p>{description}</p>
       <span>
