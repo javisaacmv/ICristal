@@ -22,6 +22,12 @@ const NotificationSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  emails: {
+    type: [String],
+  },
+  lastSend: {
+    type: Date,
+  },
 });
 
 const Notification = mongoose.model("notification", NotificationSchema);

@@ -55,6 +55,7 @@ const NotificationsComponent = () => {
             description={n.description}
             deadline={n.deadline}
             active={n.active}
+            emails={n.emails}
             setOnLoading={setOnLoading}
             deleteNotification={deleteNotification}
             getNotifications={getNotifications}

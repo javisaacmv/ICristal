@@ -5,6 +5,7 @@ const { check, validationResult } = require("express-validator");
 //const bcrypt = require("bcrypt");
 //const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
+const sendEmail = require("../services/email-sender");
 
 //notification Model
 const Notification = require("../db/models/Notification");
@@ -37,7 +38,7 @@ router.post(
       return res.status(400).json({ error: errors.array() });
     }
 
-    const { title, description, deadline } = req.body;
+    const { title, description, deadline, emails } = req.body;
 
     try {
       notif = new Notification({
@@ -45,9 +46,20 @@ router.post(
         description,
         userId: req.user.id,
         deadline,
+        emails,
       });
 
       await notif.save();
+
+      notif.emails.forEach((email) => {
+        sendEmail(
+          "ICristal",
+          email,
+          "Nueva tarea - " + notif.title,
+          notif.description
+        );
+      });
+      await notif.updateOne({ lastSend: new Date() });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("server error");

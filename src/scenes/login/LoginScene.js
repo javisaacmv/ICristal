@@ -74,7 +74,7 @@ const LoginScene = (props) => {
                   Aceptar
                 </button>
               </div>
-              {errors && <p className="help is-danger">{errors}</p>}
+              {errors && <p className="help is-danger">{errors.msg}</p>}
             </div>
           </div>
         </div>
