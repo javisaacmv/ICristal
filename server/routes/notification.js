@@ -38,7 +38,7 @@ router.post(
       return res.status(400).json({ error: errors.array() });
     }
 
-    const { title, description, deadline, emails } = req.body;
+    const { title, description, deadline, emails, file } = req.body;
 
     try {
       notif = new Notification({
@@ -47,6 +47,8 @@ router.post(
         userId: req.user.id,
         deadline,
         emails,
+        file: file.fileName,
+        fileName: file.filePath,
       });
 
       await notif.save();
@@ -56,7 +58,8 @@ router.post(
           "ICristal",
           email,
           "Nueva tarea - " + notif.title,
-          notif.description
+          notif.description,
+          file
         );
       });
       await notif.updateOne({ lastSend: new Date() });

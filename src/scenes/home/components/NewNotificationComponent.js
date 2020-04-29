@@ -20,6 +20,8 @@ const NewNotificationComponent = ({
     value: "",
     error: "",
   });
+  const [fileName, setFileName] = React.useState("Adjuntar archivo");
+  const [file, setFile] = React.useState("");
 
   const onClickEmailBtn = () => {
     if (!ValidateEmail(email.value)) {
@@ -45,6 +47,11 @@ const NewNotificationComponent = ({
     return /\S+@\S+\.\S+/.test(mail);
   }
 
+  const onChangeFile = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+
   const onDone = () => {
     if (!title.value) {
       setTitle({ ...title, error: "Introduzca un titulo" });
@@ -56,12 +63,12 @@ const NewNotificationComponent = ({
     }
     setOnLoading(true);
 
-    console.log(emailsArr);
     saveNotification({
       title: title.value,
       description: description.value,
       deadline: moment(date),
       emails: emailsArr,
+      file: file,
     });
     setOnLoading(false);
 
@@ -110,7 +117,7 @@ const NewNotificationComponent = ({
           <br />
           <div className="field">
             <div className="control">
-              <input
+              <textarea
                 className="textarea "
                 type="text"
                 placeholder="Descripción"
@@ -125,27 +132,47 @@ const NewNotificationComponent = ({
             </div>
             {description.error && <p className="help">{description.error}</p>}
           </div>
-
-          <div className="field has-addons">
-            <div className="control">
-              <input
-                className="input "
-                type="text"
-                placeholder="Ingrese los destinatarios"
-                value={email.value}
-                onChange={(e) =>
-                  setEmail({
-                    ...email,
-                    value: e.currentTarget.value,
-                  })
-                }
-              />
+          <div className="">
+            <div className="field has-addons ">
+              <div className="file has-name is-right is-primary">
+                <label className="file-label">
+                  <input
+                    className="file-input"
+                    type="file"
+                    name="resume"
+                    onChange={(e) => onChangeFile(e)}
+                  />
+                  <span className="file-cta">
+                    <span className="file-icon">
+                      <i className="fas fa-upload"></i>
+                    </span>
+                    <span className="file-label">Elige un archivo</span>
+                  </span>
+                  <span className="file-name">{fileName}</span>
+                </label>
+              </div>
             </div>
+            <div className="field has-addons">
+              <div className="control">
+                <input
+                  className="input "
+                  type="text"
+                  placeholder="Ingrese los destinatarios"
+                  value={email.value}
+                  onChange={(e) =>
+                    setEmail({
+                      ...email,
+                      value: e.currentTarget.value,
+                    })
+                  }
+                />
+              </div>
 
-            <div className="control">
-              <button className="button is-info" onClick={onClickEmailBtn}>
-                +
-              </button>
+              <div className="control">
+                <button className="button is-info" onClick={onClickEmailBtn}>
+                  +
+                </button>
+              </div>
             </div>
           </div>
           <div>{email.error && <p className="help">{email.error}</p>}</div>

@@ -28,6 +28,12 @@ const NotificationSchema = new Schema({
   lastSend: {
     type: Date,
   },
+  file: {
+    type: String,
+  },
+  fileName: {
+    type: String,
+  },
 });
 
 const Notification = mongoose.model("notification", NotificationSchema);

@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendEmail = (rem, dest, subject, body) => {
+const sendEmail = (rem, dest, subject, body, file) => {
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
@@ -8,12 +8,18 @@ const sendEmail = (rem, dest, subject, body) => {
       pass: "Nero1130",
     },
   });
-
+  const attach = file.data;
   const mailOptions = {
     from: `${rem} <icristal1130@gmail.com>`,
     to: dest,
     subject: subject,
     text: body,
+    attachments: [
+      {
+        filename: attach.fileName,
+        path: attach.filePath, // stream this file
+      },
+    ],
   };
 
   return transporter.sendMail(mailOptions, function (error, info) {

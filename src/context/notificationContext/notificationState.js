@@ -17,19 +17,33 @@ const NotifState = (props) => {
         "Content-Type": "application/json",
       },
     };
+    const fileConfig = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const formData = new FormData();
+    formData.append("file", data.file);
+
     try {
-      const res = await axios.post(url + "/notif", data, config);
+      console.log(data.file);
+      let res = await axios.post(url + "/uploadfile", formData, fileConfig);
+
+      res = await axios.post(url + "/notif", { ...data, file: res }, config);
+      console.log(res);
+
       setState({
         ...state,
         res,
         errors: null,
       });
-      getNotifications();
+      await getNotifications();
     } catch (err) {
       setState({
         ...state,
         res: null,
-        errors: err.response.data,
+        errors: err.message,
       });
     }
   };
@@ -42,7 +56,7 @@ const NotifState = (props) => {
         res,
         errors: null,
       });
-      getNotifications();
+      await getNotifications();
     } catch (err) {
       setState({
         ...state,
